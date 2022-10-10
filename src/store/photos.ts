@@ -84,7 +84,7 @@ export const photosSlice = createSlice({
       state.selectedObject = action.payload;
     },
     deselectObject: (state) => {
-      state.selectedObject = 'null';
+      state.selectedObject = '';
     },
     cancelAction: (state) => {
       const stack = cloneDeep(state.stack);
@@ -147,6 +147,27 @@ export const photosSlice = createSlice({
 
       state.entities[state.activePhoto].images = newImages;
     },
+    mirroriging: (state) => {
+      const prevImage = state.entities[state.activePhoto].images.find(
+        (image) => image.id === state.selectedObject,
+      ) as Photo;
+
+      state.stack = [...state.stack, prevImage];
+
+      const newImage = cloneDeep(prevImage);
+
+      newImage.scaleX = -(newImage?.scaleX ?? 1);
+
+      const newImages = state.entities[state.activePhoto].images.map((image) => {
+        if (image.id === newImage.id) {
+          return newImage;
+        }
+
+        return image;
+      });
+
+      state.entities[state.activePhoto].images = newImages;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -178,4 +199,5 @@ export const {
   copyImage,
   cutImage,
   pustImage,
+  mirroriging,
 } = photosSlice.actions;

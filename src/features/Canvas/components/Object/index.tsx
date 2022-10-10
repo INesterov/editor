@@ -1,10 +1,11 @@
 import React from 'react';
 import Konva from 'konva';
 import { Transformer } from 'react-konva';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from 'store';
-import { selectObject, updateImage, Photo } from 'store/photos';
+import { Photo } from 'store/photos';
 import { URLImage } from '../URLImage';
+import { useObject } from './hooks/useObject';
 
 type Props = {
   src: string;
@@ -21,15 +22,26 @@ export function Object(props: Props): JSX.Element {
     src,
     image,
     isCtrlPressed,
-    id, entitieId,
+    id,
+    entitieId,
     x,
     y,
   } = props;
-  const dispatch = useDispatch();
   const shapeRef = React.useRef<Konva.Image>(null);
   const trRef = React.useRef<Konva.Transformer>(null);
   const selectedObject = useSelector((state: RootState) => state.photo.selectedObject);
   const isSelected = selectedObject === id;
+  const {
+    updatePosition,
+    onSelect,
+    onTransformImage,
+    onDbClick,
+  } = useObject({
+    image,
+    entitieId,
+    isCtrlPressed,
+    id,
+  });
 
   React.useEffect(() => {
     if (isSelected && trRef.current && shapeRef.current) {
@@ -38,37 +50,6 @@ export function Object(props: Props): JSX.Element {
       trRef.current.getLayer()?.batchDraw();
     }
   }, [isSelected]);
-
-  const updatePosition = React.useCallback((evt: Konva.KonvaEventObject<DragEvent>) => {
-    const { attrs } = evt.target.toObject();
-    const imageProps = attrs as Photo;
-
-    dispatch(updateImage({
-      ...image,
-      x: imageProps.x,
-      y: imageProps.y,
-    }));
-  }, [updateImage, entitieId, image]);
-
-  const onSelect = React.useCallback(() => {
-    if (isCtrlPressed) {
-      dispatch(selectObject(id));
-    }
-  }, [selectObject, isCtrlPressed, id]);
-
-  const onTransformImage = React.useCallback((evt: Konva.KonvaEventObject<Event>) => {
-    const { attrs } = evt.target.toObject();
-    const imageProps = attrs as Photo;
-
-    dispatch(updateImage({
-      ...image,
-      x: imageProps.x,
-      y: imageProps.y,
-      scaleX: imageProps.scaleX,
-      scaleY: imageProps.scaleY,
-      rotation: imageProps.rotation,
-    }));
-  }, [updateImage, image]);
 
   return (
     <>
@@ -86,6 +67,7 @@ export function Object(props: Props): JSX.Element {
         onDragEnd={updatePosition}
         globalCompositeOperation="source-over"
         draggable
+        onContextMenu={onDbClick}
         id={id}
       />
       {isSelected && (

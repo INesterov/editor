@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { photosSlice } from './photos';
+import { contextMenuSlice } from './contextMenu';
 
 export const store = configureStore({
   reducer: {
     photo: photosSlice.reducer,
+    contextMenu: contextMenuSlice.reducer,
   },
 });
 

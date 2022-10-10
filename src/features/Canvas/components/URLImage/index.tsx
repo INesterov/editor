@@ -11,6 +11,7 @@ type Props = {
   scaleX?: number;
   scaleY?: number;
   onClick?: () => void;
+  onContextMenu?: (evt: Konva.KonvaEventObject<PointerEvent>) => void;
   onDragEnd?: (evt: Konva.KonvaEventObject<DragEvent>) => void;
   onTransformEnd?: (evt: Konva.KonvaEventObject<Event>) => void;
   isSelected?: boolean;
@@ -37,6 +38,7 @@ export const URLImage = React.forwardRef<Konva.Image, Props>((props, imageRef): 
     rotation,
     scaleX,
     scaleY,
+    onContextMenu,
   } = props;
 
   const handleLoad = React.useCallback((e: Event) => {
@@ -75,9 +77,11 @@ export const URLImage = React.forwardRef<Konva.Image, Props>((props, imageRef): 
       onTransformEnd={onTransformEnd}
       globalCompositeOperation={globalCompositeOperation}
       id={id}
+      name={id}
       rotation={rotation}
       scaleX={scaleX}
       scaleY={scaleY}
+      onContextMenu={onContextMenu}
     />
   );
 });

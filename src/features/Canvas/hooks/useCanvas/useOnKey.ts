@@ -8,15 +8,11 @@ import {
   pustImage,
 } from 'store/photos';
 
-export function useCanvas() {
+export function useOneKey() {
   const dispatch = useDispatch();
   const [isCtrlPress, setCtrlPress] = React.useState(false);
 
   const onKeyPress = React.useCallback((evt: KeyboardEvent) => {
-    if (evt.code === 'Delete') {
-      dispatch(deleteImage());
-    }
-
     if (evt.ctrlKey && evt.code === 'KeyZ') {
       dispatch(cancelAction());
     }
@@ -36,25 +32,20 @@ export function useCanvas() {
     if (evt.ctrlKey && evt.code === 'KeyV') {
       dispatch(pustImage());
     }
+
+    if (evt.code === 'Delete') {
+      dispatch(deleteImage());
+    }
   }, [setCtrlPress]);
 
   const onKeyUp = React.useCallback(() => {
     setCtrlPress(false);
   }, [setCtrlPress]);
 
-  React.useEffect(() => {
-    document.addEventListener('keypress', onKeyPress);
-    document.addEventListener('keydown', onKeyDown);
-    document.addEventListener('keyup', onKeyUp);
-
-    return () => {
-      document.removeEventListener('keypress', onKeyPress);
-      document.removeEventListener('keydown', onKeyDown);
-      document.removeEventListener('keyup', onKeyUp);
-    };
-  }, []);
-
   return {
     isCtrlPress,
+    onKeyPress,
+    onKeyDown,
+    onKeyUp,
   };
 }

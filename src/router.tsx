@@ -12,7 +12,7 @@ export function Router(): JSX.Element {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Editor />}>
-          <Route path=':photoId' element={<Canvas />} />
+          <Route path=":photoId" element={<Canvas />} />
         </Route>
       </Routes>
     </BrowserRouter>
