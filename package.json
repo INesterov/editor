@@ -1,0 +1,51 @@
+{
+  "name": "shunki",
+  "version": "1.0.0",
+  "license": "MIT",
+  "source": "public/index.html",
+  "scripts": {
+    "start": "parcel",
+    "build": "parcel build",
+    "lint": "eslint . --ext .ts,.tsx"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.186",
+    "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.6",
+    "@types/styled-components": "^5.1.26",
+    "@typescript-eslint/eslint-plugin": "^5.13.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "buffer": "^6.0.3",
+    "eslint": "^8.24.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-react": "^7.31.8",
+    "http-proxy-middleware": "^2.0.6",
+    "parcel": "^2.7.0",
+    "process": "^0.11.10",
+    "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.8.5",
+    "axios": "^0.27.2",
+    "eslint-plugin-import": "^2.26.0",
+    "konva": "^8.3.13",
+    "lodash": "^4.17.21",
+    "nanoid": "^4.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.4.0",
+    "react-konva": "^18.2.2",
+    "react-loader-spinner": "^5.3.4",
+    "react-redux": "^8.0.4",
+    "react-router-dom": "6",
+    "rxjs": "^7.5.7",
+    "styled-components": "^5.3.6",
+    "styled-normalize": "^8.0.7",
+    "use-image": "^1.1.0"
+  },
+  "alias": {
+    "store": "./src/store"
+  }
+}
